@@ -18,6 +18,8 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.google.android.gms.location.ActivityRecognition
+import com.google.android.gms.location.ActivityTransitionResult
 
 class TrackerService : Service(), SensorEventListener {
     private val TRANSITION_RECEIVER_ACTION = "nit2x.paba.backgroundservice.ACTIVITY_TRANSITIONS"
@@ -134,7 +136,7 @@ class TrackerService : Service(), SensorEventListener {
         super.onDestroy()
         Log.d("TrackerService", "Service onDestroy")
         try {
-            ActivityRecognition.getClient(this).removeActiviryTransitionUpdates(pendingIntent)
+            ActivityRecognition.getClient(this).removeActivityTransitionUpdates(pendingIntent)
                 .addOnSuccessListener { Log.d("TackerService", "Activity updates removed.") }
                 .addOnFailureListener { e -> Log.e("TrackerService", "Failed to remove activity updates.", e) }
             unregisterReceiver(activityReceiver)
